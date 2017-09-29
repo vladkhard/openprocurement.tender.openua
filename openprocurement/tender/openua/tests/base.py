@@ -9,7 +9,8 @@ from openprocurement.tender.belowthreshold.tests.base import (
     now,
     test_features_tender_data,
     BaseTenderWebTest,
-    test_bids as base_test_bids
+    test_bids as base_test_bids,
+    test_organization,
 )
 test_tender_data = test_tender_ua_data = test_tender_data_api.copy()
 test_tender_data['procurementMethodType'] = "aboveThresholdUA"
@@ -50,6 +51,44 @@ test_tender_data["items"] = [{
             "streetAddress": u"вул. Банкова 1"
             }
 }]
+test_features_bids = [
+    {
+        "parameters": [
+            {
+                "code": i["code"],
+                "value": 0.1,
+            }
+            for i in test_features_tender_data['features']
+        ],
+        "tenderers": [
+            test_organization
+        ],
+        "value": {
+            "amount": 479,
+            "currency": "UAH",
+            "valueAddedTaxIncluded": True
+        },
+        'selfEligible': True, 'selfQualified': True,
+    },
+    {
+        "parameters": [
+            {
+                "code": i["code"],
+                "value": 0.15,
+            }
+            for i in test_features_tender_data['features']
+        ],
+        "tenderers": [
+            test_organization
+        ],
+        "value": {
+            "amount": 479,
+            "currency": "UAH",
+            "valueAddedTaxIncluded": True
+        },
+        'selfEligible': True, 'selfQualified': True,
+    }
+]
 if SANDBOX_MODE:
     test_tender_data['procurementMethodDetails'] = 'quick, accelerator=1440'
 
